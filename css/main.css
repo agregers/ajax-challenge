@@ -11,3 +11,10 @@ body {
     margin-right: 10px;
 }
 
+#noComment, .hide{
+	display: none;
+}
+
+.show {
+	display:block;
+}

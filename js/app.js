@@ -12,22 +12,23 @@ angular.module('AjaxChallengeApp', ['ui.bootstrap'])
         $httpProvider.defaults.headers.common['X-Parse-REST-API-Key'] = '7Q0h1AQgeYYcJ073P5MP14d8EWUbJU55hNWJisnw';
     })
     .controller('CommentController', function($scope, $http) {
-        $scope.refreshComments = function () {
-            $http.get(challengeUrl + '?where={"done": false}')
-                .success(function (data) {
-                    $scope.comments = data.results;
+        $scope.refreshComments = function() {
+            $http.get(challengeUrl + '?order=-score')
+                .success(function(data) {
+                    var sorted = data.results;
+                    $scope.comments = sorted;
                 });
         };
         $scope.refreshComments();
 
         $scope.newComment = {done: false};
 
-        $scope.addComment = function () {
+        $scope.addComment = function() {
             $scope.inserting = true;
             $http.post(challengeUrl, $scope.newComment)
-                .success(function (responseData) {
+                .success(function(responseData) {
                     $scope.newComment.objectId = responseData.objectId;
-                    $scope.comment.push($scope.newComment);
+                    $scope.comments.push($scope.newComment);
                     $scope.newComment = {done: false};
                 })
                 .finally(function () {
@@ -35,11 +36,10 @@ angular.module('AjaxChallengeApp', ['ui.bootstrap'])
                 });
         };
 
-        $scope.updateComment = function (comment) {
+        $scope.updateComment = function(comment) {
             $http.put(challengeUrl + '/' + comment.objectId, comment)
                 .success(function(){
-                    // we could give some feedback to the user
-                    // hey your update was successful
+                    console.log("Comment was updated!");
                 })
         };
 
@@ -60,6 +60,13 @@ angular.module('AjaxChallengeApp', ['ui.bootstrap'])
                 })
                 .finally(function(){
                     $scope.updating = false;
+                });
+        };
+
+        $scope.deleteComment = function(comment){
+            $http.delete(challengeUrl + '/' + comment.objectId)
+                .success(function(){
+                    console.log("Comment was deleted!");
                 });
         };
     });

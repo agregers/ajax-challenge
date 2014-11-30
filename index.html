@@ -18,19 +18,18 @@
 
             <section>
                 <h2>Add a Comment</h2>
-                <!--  
-                put a form here for entering a new comment
-                the user must select a rating, and enter a name, title, and comment body
-                before the comment can be saved to the server
-                for the rating selection, use the Angular Bootstrap Rating directive 
-                http://angular-ui.github.io/bootstrap/#/rating
-                their script file is included below
-                -->
                 <form ng-submit="addComment()">
-                    <div class="form-group">
-                        <label for="person-title">Name</label>
-                        <input type="text" id="person-title" class="form-control"
-                               placeholder="title of person" ng-model="newComment.title"/>
+
+                    <div class="row">
+                        <div class = "col-xs-4">
+                        <label for="person-name">Name</label>
+                        <input type="text" id="person-name" class="form-control"
+                               placeholder="enter your name" ng-model="newComment.name"/>
+                    </div>
+
+                    <div class = "col-xs-4">
+                        <label for="comment-title">Title</label>
+                        <input type="text" id="comment-title" class="form-control" placeholder="title of comment" ng-model="newComment.title"/>
                     </div>
 
                     <div class="form-group">
@@ -38,48 +37,64 @@
                         <rating max ="5"ng-model="newComment.rating"></rating>
                     </div>
 
-                    <div class="form-group">
+                    <div class = "col-xs-10">
+                        <label for="comment-text">Comment</label>
+                        <input type="text" id="comment-text" class="form-control"
+                               placeholder="body of comment" ng-model="newComment.body"/>
+                    </div>
+
+                    <div class="col-xs-2">
+                        <label>Add Comment?</label>
                         <button type="submit" class="btn btn-primary" ng-disabled="inserting">Add Comment</button>
                     </div>
+                </div>
                 </form>
             </section>
 
             <section>
                 <h2>Comments</h2>
-                <!-- 
-                display existing comments here
-                each comment should also have UI allowing the user to vote up/down the comment
-                as well as delete it
-                 -->
-
-
                     <p>
                         <button class="btn btn-primary" ng-click="refreshComments()">Refresh</button>
                         <img src="img/ajax-loader.gif" alt="loading animation" ng-if="loading || updating"/>
+                         <img src="img/ajax-spinner.gif" alt="loading animation" ng-if="loading || updating"/>
                     </p>
 
-                    <table class="table">
+                    <div id="noComment" ng-class="{show: (comments.length == 0)}">
+                    <h4>No reviews yet. Please add a review.</h4>
+                    </div>
+
+                    <table class="table table-striped" ng-class="{hide: (comments.length == 0)}">
                         <thead>
                             <tr>
                                 <th>Name</th>
+                                <th>Title</th>
                                 <th>Comment</th>
                                 <th>Rating</th>
                                 <th>Votes</th>
+                                <th>Delete Comment?</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="task in tasks" ng-class="{done: comment.done}">
-                            <td>{{comments.title}}</td>
+                            <tr ng-repeat="comment in comments" ng-class="{done: comment.done}">
+                            <td>{{comment.name }}</td>
+
+                            <td>{{comment.title}}</td>
+                            <td> 
+                                <textarea id="bodyDisplay" cols="60" rows="10" disabled>{{comment.body}}</textarea>
+                            </td>
+
                             <td>
-                                <rating max="3" ng-model="comment.priority" ng-change="updateComment(comment)" readonly="comment.done"></rating>
+                                <rating max="5" ng-model="comment.rating" ng-change="updateComments(comment)" readonly="true"></rating>
 
                             </td>
-                            <td>
-                                {{comments.votes || 0}}
+                            
+                                <td>{{comment.score || 0}}</td>
                                 <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementVotes(comment, 1)"></span>
+
                                 <span class="glyphicon glyphicon-thumbs-down" ng-click="incrementVotes(comment, -1)"></span>
                             </td>
-                            <td><input type="checkbox" ng-model="comment.done" ng-change="updateComment(comment)"/></td>
+
+                            <td><button class="btn btn-danger" ng-click="deleteComment(comment)">Delete</button></td>
                         </tr>
                     </tbody>
                 </table>
