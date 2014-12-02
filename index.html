@@ -54,8 +54,8 @@
             <section>
                 <h2>Comments</h2>
                     <p>
-                        <button class="btn btn-primary" ng-click="refreshComments()">Refresh</button>
-                        <img src="img/ajax-loader.gif" alt="loading animation" ng-if="loading || updating"/>
+
+                        <img src="img/ajax-spinner.gif" alt="loading animation" ng-if="loading || updating"/>
                     </p>
 
                     <div id="noComment" ng-class="{show: (comments.length == 0)}">
@@ -65,6 +65,7 @@
                     <table class="table table-striped" ng-class="{hide: (comments.length == 0)}">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>Name</th>
                                 <th>Title</th>
                                 <th>Comment</th>
@@ -75,25 +76,28 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="comment in comments" ng-class="{done: comment.done}">
-                            <td>{{comment.name }}</td>
 
-                            <td>{{comment.title}}</td>
-                            <td> 
-                                <textarea id="bodyDisplay" cols="60" rows="10" disabled>{{comment.body}}</textarea>
-                            </td>
 
-                            <td>
-                                <rating max="5" ng-model="comment.rating" ng-change="updateComments(comment)" readonly="true"></rating>
-
-                            </td>
-                            
-                                <td>{{comment.votes || 0}}</td>
+                                <td>
                                 <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementVotes(comment, 1)"></span>
 
                                 <span class="glyphicon glyphicon-thumbs-down" ng-click="incrementVotes(comment, -1)" ng-if="comment.votes > 0"></span>
-                            </td>
+                                </td>
 
-                            <td><button class="btn btn-danger" ng-click="deleteComment(comment)">Delete</button></td>
+                                <td>{{comment.name }}</td>
+
+                                <td>{{comment.title}}</td>
+                                <td>
+                                    <textarea id="bodyDisplay" cols="60" rows="10" disabled>{{comment.body}}</textarea>
+                                </td>
+
+                                <td>
+                                    <rating max="5" ng-model="comment.rating" ng-change="updateComments(comment)" readonly="true"></rating>
+
+                                </td>
+                                <td>{{comment.votes || 0}}</td>
+
+                                <td><button class="btn btn-danger" ng-click="deleteComment(comment)">Delete</button></td>
                         </tr>
                     </tbody>
                 </table>
