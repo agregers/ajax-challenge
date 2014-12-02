@@ -22,13 +22,13 @@
                 <form class = "form" ng-submit="addComment()">
 
                     <div class="row">
-                        <div class = "col-xs-4">
+                        <div class = "col-xs-6">
                         <label for="person-name">Name</label>
                         <input type="text" id="person-name" class="form-control"
                                placeholder="enter your name" ng-model="newComment.name"/>
                         </div>
 
-                        <div class = "col-xs-4">
+                        <div class = "col-xs-6">
                             <label for="comment-title">Title</label>
                             <input type="text" id="comment-title" class="form-control" placeholder="title of comment" ng-model="newComment.title"/>
                         </div>
@@ -38,12 +38,12 @@
                             <rating max ="5"ng-model="newComment.rating"></rating>
                         </div>
 
-                        <div class = "col-xs-10">
+                        <div class = "col-xs-8">
                             <label for="comment-text">Comment</label>
                             <input type="text" id="comment-text" class="form-control" placeholder="body of comment" ng-model="newComment.body"/>
                         </div>
 
-                        <div class="col-xs-2">
+                        <div class="col-xs-4">
                             <label>Add Comment?</label>
                             <button type="submit" class="btn btn-primary" ng-disabled="inserting">Add Comment</button>
                         </div>
