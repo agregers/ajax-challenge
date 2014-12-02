@@ -1,10 +1,6 @@
 "use strict";
-/*
-    app.js, main Angular application script
-    define your module and controllers here
-*/
 
-var challengeUrl = 'https://api.parse.com/1/classes/comment';
+var challengeUrl = 'https://api.parse.com/1/classes/comments';
 
 angular.module('AjaxChallengeApp', ['ui.bootstrap'])
     .config(function($httpProvider) {
@@ -31,16 +27,16 @@ angular.module('AjaxChallengeApp', ['ui.bootstrap'])
                     $scope.comments.push($scope.newComment);
                     $scope.newComment = {done: false};
                 })
-                .finally(function () {
+                .finally(function() {
                     $scope.inserting = false;
                 });
         };
 
-        $scope.updateComment = function(comment) {
+        $scope.updateComments = function(comment) {
             $http.put(challengeUrl + '/' + comment.objectId, comment)
                 .success(function(){
                     console.log("Comment was updated!");
-                })
+                });
         };
 
         $scope.incrementVotes = function(comment, amount) {

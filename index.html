@@ -7,9 +7,10 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/main.css">
     </head>
+
     <body>
 
-        <main class="container-fluid" ng-app="AjaxChallengeApp" ng-controller="CommentController">
+        <main class="container" ng-app="AjaxChallengeApp" ng-controller="CommentController">
             <section>
                 <img src="img/super-bass-o-matic-76.jpg" alt="product picture" class="product-picture">
                 <h1>The Super Bass-o-Matic '76</h1>
@@ -18,36 +19,35 @@
 
             <section>
                 <h2>Add a Comment</h2>
-                <form ng-submit="addComment()">
+                <form class = "form" ng-submit="addComment()">
 
                     <div class="row">
                         <div class = "col-xs-4">
                         <label for="person-name">Name</label>
                         <input type="text" id="person-name" class="form-control"
                                placeholder="enter your name" ng-model="newComment.name"/>
-                    </div>
+                        </div>
 
-                    <div class = "col-xs-4">
-                        <label for="comment-title">Title</label>
-                        <input type="text" id="comment-title" class="form-control" placeholder="title of comment" ng-model="newComment.title"/>
-                    </div>
+                        <div class = "col-xs-4">
+                            <label for="comment-title">Title</label>
+                            <input type="text" id="comment-title" class="form-control" placeholder="title of comment" ng-model="newComment.title"/>
+                        </div>
 
-                    <div class="form-group">
-                        <label>Rating</label>
-                        <rating max ="5"ng-model="newComment.rating"></rating>
-                    </div>
+                        <div class="form-group">
+                            <label>Rating</label>
+                            <rating max ="5"ng-model="newComment.rating"></rating>
+                        </div>
 
-                    <div class = "col-xs-10">
-                        <label for="comment-text">Comment</label>
-                        <input type="text" id="comment-text" class="form-control"
-                               placeholder="body of comment" ng-model="newComment.body"/>
-                    </div>
+                        <div class = "col-xs-10">
+                            <label for="comment-text">Comment</label>
+                            <input type="text" id="comment-text" class="form-control" placeholder="body of comment" ng-model="newComment.body"/>
+                        </div>
 
-                    <div class="col-xs-2">
-                        <label>Add Comment?</label>
-                        <button type="submit" class="btn btn-primary" ng-disabled="inserting">Add Comment</button>
+                        <div class="col-xs-2">
+                            <label>Add Comment?</label>
+                            <button type="submit" class="btn btn-primary" ng-disabled="inserting">Add Comment</button>
+                        </div>
                     </div>
-                </div>
                 </form>
             </section>
 
@@ -56,7 +56,6 @@
                     <p>
                         <button class="btn btn-primary" ng-click="refreshComments()">Refresh</button>
                         <img src="img/ajax-loader.gif" alt="loading animation" ng-if="loading || updating"/>
-                         <img src="img/ajax-spinner.gif" alt="loading animation" ng-if="loading || updating"/>
                     </p>
 
                     <div id="noComment" ng-class="{show: (comments.length == 0)}">
@@ -88,10 +87,10 @@
 
                             </td>
                             
-                                <td>{{comment.score || 0}}</td>
+                                <td>{{comment.votes || 0}}</td>
                                 <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementVotes(comment, 1)"></span>
 
-                                <span class="glyphicon glyphicon-thumbs-down" ng-click="incrementVotes(comment, -1)"></span>
+                                <span class="glyphicon glyphicon-thumbs-down" ng-click="incrementVotes(comment, -1)" ng-if="comment.votes > 0"></span>
                             </td>
 
                             <td><button class="btn btn-danger" ng-click="deleteComment(comment)">Delete</button></td>
